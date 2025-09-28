@@ -1,3 +1,9 @@
+/* Center single event card in grid-list */
+.event .grid-list:only-child,
+.event .grid-list:has(> li:only-child) {
+  display: flex !important;
+  justify-content: center;
+}
 /*-----------------------------------*\
   #index.css
 \*-----------------------------------*/
