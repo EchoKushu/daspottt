@@ -2170,3 +2170,28 @@ textarea.input-field {
 .whatsapp-float:hover {
     background-color: #20ba5a;
 }
+
+.video-section {
+  padding: 100px 0;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.video-wrapper {
+  position: relative;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16; /* Portrait ratio */
+  object-fit: cover;
+  border-radius: 12px;
+}
