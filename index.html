@@ -481,6 +481,33 @@ At 18, she moved to the UK with big dreams and a passion for sharing her culture
 
 
 
+            <!-- VIDEO SECTION -->
+      <section class="section video-section text-center bg-black-10">
+        <div class="container">
+
+          <p class="section-subtitle label-2">Experience The Vibe</p>
+          <h2 class="headline-1 section-title">Feel The Atmosphere</h2>
+
+          <div class="video-grid">
+
+            <!-- Video 1 -->
+            <div class="video-wrapper">
+              <video id="video1" preload="none" poster="codes/images/playbtn.png" onclick="playVideo('video1')" muted>
+                <source src="codes/video/vid1.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-wrapper">
+              <video id="video2" preload="none" poster="codes/images/playbtn.png" onclick="playVideo('video2')" muted>
+                <source src="codes/video/vid2.mp4" type="video/mp4">
+              </video>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
 
       <!-- 
         - #SPECIAL DISH
@@ -1211,6 +1238,14 @@ At 18, she moved to the UK with big dreams and a passion for sharing her culture
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
          alt="WhatsApp" />
 
+<script>
+function playVideo(videoId) {
+  var video = document.getElementById(videoId);
+  video.play();
+  video.controls = true;
+  video.muted = false;
+}
+</script>
 
 
 
@@ -1218,6 +1253,16 @@ At 18, she moved to the UK with big dreams and a passion for sharing her culture
   <!-- 
     - custom js link
   -->
+
+  <script>
+function playVideo(videoId) {
+  var video = document.getElementById(videoId);
+  video.play();
+  video.controls = true;
+  video.muted = false;
+}
+</script>
+
   <script src="./codes/js/script.js"></script>
 
 </body>
