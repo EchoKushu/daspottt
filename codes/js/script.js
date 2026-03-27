@@ -168,3 +168,45 @@ window.addEventListener("mousemove", function (event) {
   }
 
 });
+
+
+/*
+  Easter popup: show once per session when scrolled down 100px
+*/
+const easterOverlay = document.querySelector('.easter-popup-overlay');
+const easterCloseBtn = document.querySelector('.easter-popup-close');
+const EASTER_KEY = 'easterShown';
+
+if (easterOverlay && easterCloseBtn) {
+  const alreadyShown = sessionStorage.getItem(EASTER_KEY) === '1';
+
+  const showPopup = () => {
+    // if already shown in this session, don't show again
+    if (sessionStorage.getItem(EASTER_KEY) === '1') return;
+
+    if (window.scrollY >= 100) {
+      easterOverlay.classList.add('active');
+      easterOverlay.setAttribute('aria-hidden', 'false');
+      // mark as shown for this session
+      try { sessionStorage.setItem(EASTER_KEY, '1'); } catch (e) { /* ignore storage errors */ }
+    }
+  };
+
+  // run on scroll and on load (in case user loads page already scrolled)
+  window.addEventListener('scroll', showPopup, { passive: true });
+  window.addEventListener('load', showPopup);
+
+  // allow user to close manually
+  easterCloseBtn.addEventListener('click', function (e) {
+    easterOverlay.classList.remove('active');
+    easterOverlay.setAttribute('aria-hidden', 'true');
+  });
+
+  // clicking overlay (outside popup) closes it
+  easterOverlay.addEventListener('click', function (e) {
+    if (e.target === easterOverlay) {
+      easterOverlay.classList.remove('active');
+      easterOverlay.setAttribute('aria-hidden', 'true');
+    }
+  });
+}
