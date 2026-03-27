@@ -177,18 +177,53 @@ const easterOverlay = document.querySelector('.easter-popup-overlay');
 const easterCloseBtn = document.querySelector('.easter-popup-close');
 const EASTER_KEY = 'easterShown';
 
+// detect whether a storage type is available (may be blocked on some devices)
+function storageAvailable(type) {
+  try {
+    var storage = window[type];
+    var x = '__storage_test__';
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 if (easterOverlay && easterCloseBtn) {
-  const alreadyShown = sessionStorage.getItem(EASTER_KEY) === '1';
+  // choose sessionStorage if available, else localStorage, else fallback to in-memory
+  let storage = null;
+  if (storageAvailable('sessionStorage')) {
+    storage = sessionStorage;
+  } else if (storageAvailable('localStorage')) {
+    storage = localStorage;
+  }
+
+  let inMemoryShown = false; // fallback when storage is unavailable
+
+  const isAlreadyShown = () => {
+    if (storage) {
+      try { return storage.getItem(EASTER_KEY) === '1'; } catch (e) { return false; }
+    }
+    return inMemoryShown === true;
+  };
+
+  const markShown = () => {
+    if (storage) {
+      try { storage.setItem(EASTER_KEY, '1'); } catch (e) { /* ignore */ }
+    } else {
+      inMemoryShown = true;
+    }
+  };
 
   const showPopup = () => {
-    // if already shown in this session, don't show again
-    if (sessionStorage.getItem(EASTER_KEY) === '1') return;
+    // if already shown in this session (or via fallback), don't show again
+    if (isAlreadyShown()) return;
 
     if (window.scrollY >= 100) {
       easterOverlay.classList.add('active');
       easterOverlay.setAttribute('aria-hidden', 'false');
-      // mark as shown for this session
-      try { sessionStorage.setItem(EASTER_KEY, '1'); } catch (e) { /* ignore storage errors */ }
+      markShown();
     }
   };
 
